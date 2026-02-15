@@ -40,34 +40,34 @@ const PostModal = ({ isOpen, onClose, refreshPosts }) => {
 
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/90 backdrop-blur-md p-4">
-      <div className="glass-card w-full max-w-xl rounded-3xl p-8 shadow-2xl border-indigo-500/30">
+      <div className="glass-card w-full max-w-xl rounded-3xl p-8 shadow-2xl border-linkedin-border bg-linkedin-card">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-white">Create a Post</h2>
-          <button onClick={onClose} className="text-slate-400 hover:text-white text-2xl">×</button>
+          <h2 className="text-xl font-bold text-linkedin-text-primary">Create a Post</h2>
+          <button onClick={onClose} className="text-linkedin-text-secondary hover:text-linkedin-blue text-2xl">×</button>
         </div>
         
         <form onSubmit={handlePostSubmit} className="space-y-4">
           <textarea 
-            className="w-full bg-slate-800/50 border border-slate-700 rounded-2xl p-4 text-slate-200 h-32 outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+            className="w-full bg-linkedin-background border border-linkedin-border rounded-2xl p-4 text-linkedin-text-primary h-32 outline-none focus:ring-2 focus:ring-linkedin-blue resize-none"
             placeholder="What are you working on today?"
             value={content}
             onChange={(e) => setContent(e.target.value)}
           />
 
           <div className="flex flex-col gap-2">
-            <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Attach an Image</label>
+            <label className="text-xs font-bold text-linkedin-text-secondary uppercase tracking-widest">Attach an Image</label>
             <input 
               type="file" 
               accept="image/*"
               onChange={(e) => setImage(e.target.files[0])}
-              className="block w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white transition-all cursor-pointer"
+              className="block w-full text-sm text-linkedin-text-secondary file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-linkedin-blue file:text-white transition-all cursor-pointer"
             />
           </div>
 
           <div className="mt-6 flex justify-end">
             <button 
               type="submit"
-              className="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-2.5 rounded-xl font-bold shadow-lg shadow-indigo-600/30 transition-all active:scale-95"
+              className="bg-linkedin-blue hover:bg-linkedin-blue/80 text-white px-8 py-2.5 rounded-xl font-bold shadow-lg shadow-linkedin-blue/30 transition-all active:scale-95"
             >
               Post to Feed
             </button>

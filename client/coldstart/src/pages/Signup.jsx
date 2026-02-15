@@ -31,18 +31,18 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
-      <div className="bg-gray-800 p-8 rounded-lg shadow-xl w-96">
-        <h2 className="text-3xl font-bold mb-6 text-center text-blue-500 tracking-tighter italic">
+    <div className="min-h-screen flex items-center justify-center bg-linkedin-background text-linkedin-text-primary">
+      <div className="bg-linkedin-card p-8 rounded-lg shadow-xl w-full max-w-sm border border-linkedin-border">
+        <h2 className="text-3xl font-bold mb-6 text-center text-linkedin-blue tracking-tighter italic">
           ColdStart
         </h2>
         
         {/* Role Selection Toggle */}
-        <div className="flex bg-gray-700 rounded-xl p-1 mb-6 border border-gray-600">
+        <div className="flex bg-linkedin-background rounded-xl p-1 mb-6 border border-linkedin-border">
           <button
             type="button"
             className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${
-              formData.role === "user" ? "bg-blue-600 text-white shadow-lg" : "text-gray-400"
+              formData.role === "user" ? "bg-linkedin-blue text-white shadow-lg" : "text-linkedin-text-secondary"
             }`}
             onClick={() => setFormData({ ...formData, role: "user" })}
           >
@@ -51,7 +51,7 @@ const Signup = () => {
           <button
             type="button"
             className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${
-              formData.role === "company" ? "bg-blue-600 text-white shadow-lg" : "text-gray-400"
+              formData.role === "company" ? "bg-linkedin-blue text-white shadow-lg" : "text-linkedin-text-secondary"
             }`}
             onClick={() => setFormData({ ...formData, role: "company" })}
           >
@@ -64,32 +64,32 @@ const Signup = () => {
             type="text"
             required
             placeholder={formData.role === "company" ? "Company Name" : "Full Name"}
-            className="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 outline-none transition-colors"
+            className="w-full p-3 rounded bg-linkedin-background border border-linkedin-border focus:border-linkedin-blue outline-none transition-colors text-linkedin-text-primary"
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
           />
           <input
             type="email"
             required
             placeholder="Work or Personal Email"
-            className="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 outline-none transition-colors"
+            className="w-full p-3 rounded bg-linkedin-background border border-linkedin-border focus:border-linkedin-blue outline-none transition-colors text-linkedin-text-primary"
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
           />
           <input
             type="password"
             required
             placeholder="Password"
-            className="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 outline-none transition-colors"
+            className="w-full p-3 rounded bg-linkedin-background border border-linkedin-border focus:border-linkedin-blue outline-none transition-colors text-linkedin-text-primary"
             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
           />
           
-          <button className="w-full bg-blue-600 hover:bg-blue-700 p-3 rounded-xl font-black shadow-lg shadow-blue-500/20 transition-all hover:-translate-y-1">
+          <button className="w-full bg-linkedin-blue hover:bg-linkedin-blue/80 p-3 rounded-xl font-black shadow-lg shadow-linkedin-blue/20 transition-all hover:-translate-y-1 text-white">
             JOIN AS {formData.role.toUpperCase()}
           </button>
         </form>
 
-        <p className="mt-6 text-center text-gray-400 text-sm">
+        <p className="mt-6 text-center text-linkedin-text-secondary text-sm">
           Already have an account?{" "}
-          <Link to="/login" className="text-blue-500 font-bold hover:underline">
+          <Link to="/login" className="text-linkedin-blue font-bold hover:underline">
             Login
           </Link>
         </p>

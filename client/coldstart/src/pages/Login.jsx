@@ -25,26 +25,26 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
-      <div className="bg-gray-800 p-8 rounded-lg shadow-xl w-96">
-        <h2 className="text-3xl font-bold mb-6 text-center text-blue-500">Welcome Back</h2>
+    <div className="min-h-screen flex items-center justify-center bg-linkedin-background text-linkedin-text-primary">
+      <div className="bg-linkedin-card p-8 rounded-lg shadow-xl w-full max-w-sm border border-linkedin-border">
+        <h2 className="text-3xl font-bold mb-6 text-center text-linkedin-blue">Welcome Back</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input 
             type="email" placeholder="Email" 
-            className="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 outline-none"
+            className="w-full p-3 rounded bg-linkedin-background border border-linkedin-border focus:border-linkedin-blue outline-none text-linkedin-text-primary"
             onChange={(e) => setFormData({...formData, email: e.target.value})}
           />
           <input 
             type="password" placeholder="Password" 
-            className="w-full p-3 rounded bg-gray-700 border border-gray-600 focus:border-blue-500 outline-none"
+            className="w-full p-3 rounded bg-linkedin-background border border-linkedin-border focus:border-linkedin-blue outline-none text-linkedin-text-primary"
             onChange={(e) => setFormData({...formData, password: e.target.value})}
           />
-          <button className="w-full bg-blue-600 hover:bg-blue-700 p-3 rounded font-bold transition">
+          <button className="w-full bg-linkedin-blue hover:bg-linkedin-blue/80 p-3 rounded font-bold transition text-white">
             Login
           </button>
         </form>
-        <p className="mt-4 text-center text-gray-400">
-          Don't have an account? <Link to="/signup" className="text-blue-500">Sign up</Link>
+        <p className="mt-4 text-center text-linkedin-text-secondary">
+          Don't have an account? <Link to="/signup" className="text-linkedin-blue">Sign up</Link>
         </p>
       </div>
     </div>

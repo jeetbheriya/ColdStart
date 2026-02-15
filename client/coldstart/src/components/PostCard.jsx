@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { AiOutlineLike, AiFillLike } from 'react-icons/ai';
+import { FaRegCommentDots } from 'react-icons/fa';
+import { RiShareForwardLine } from 'react-icons/ri';
 
 const PostCard = ({ post, refreshPosts }) => {
   const { user, token } = useSelector((state) => state.auth);
@@ -87,27 +90,26 @@ const isOwner = loggedInUserId && postOwnerId &&
   };
 
   return (
-    <div className="group bg-slate-900/40 border border-slate-800/50 rounded-2xl p-6 mb-6 hover:bg-slate-900/60 transition-all shadow-lg">
-      <div className="flex items-center justify-between mb-4">
+    <div className="bg-linkedin-card border border-linkedin-border rounded-lg shadow-sm p-4 mb-4">
+      <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-tr from-indigo-600 to-violet-500 rounded-full flex items-center justify-center font-bold text-white ring-2 ring-slate-800">
-            {post.user?.name?.charAt(0) || "U"}
+          <div className="w-10 h-10 bg-linkedin-blue rounded-full flex items-center justify-center font-bold text-white">
+            {post.user?.name?.charAt(0)?.toUpperCase() || "U"}
           </div>
           <div>
-            <h4 className="font-bold text-sm text-white">{post.user?.name}</h4>
-            <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">
+            <h4 className="font-semibold text-sm text-linkedin-text-primary">{post.user?.name}</h4>
+            <p className="text-xs text-linkedin-text-secondary">
               {new Date(post.createdAt).toLocaleDateString()}
             </p>
           </div>
         </div>
 
-        {/* Action buttons will now show correctly if IDs match */}
         {isOwner && (
-          <div className="flex gap-3">
+          <div className="flex gap-2">
             {!isEditing && (
-              <button onClick={() => setIsEditing(true)} className="text-slate-500 hover:text-indigo-400 transition-colors text-xs font-bold">Edit</button>
+              <button onClick={() => setIsEditing(true)} className="text-linkedin-text-secondary hover:text-linkedin-blue transition-colors text-xs font-medium">Edit</button>
             )}
-            <button onClick={handleDelete} className="text-slate-600 hover:text-red-400 transition-colors text-xs font-bold">Delete</button>
+            <button onClick={handleDelete} className="text-red-600 hover:text-red-800 transition-colors text-xs font-medium">Delete</button>
           </div>
         )}
       </div>
@@ -115,50 +117,49 @@ const isOwner = loggedInUserId && postOwnerId &&
       {isEditing ? (
         <div className="space-y-3">
           <textarea 
-            className="w-full bg-slate-800/50 border border-slate-700 rounded-xl p-3 text-slate-200 text-sm outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+            className="w-full bg-linkedin-background border border-linkedin-border rounded-md p-3 text-linkedin-text-primary text-sm outline-none focus:ring-1 focus:ring-linkedin-blue resize-none"
             value={editContent}
             onChange={(e) => setEditContent(e.target.value)}
           />
-          <div className="flex gap-2">
-            <button onClick={handleUpdate} className="bg-indigo-600 hover:bg-indigo-500 px-4 py-1.5 rounded-lg text-[10px] font-bold text-white transition-all">Save</button>
-            <button onClick={() => { setIsEditing(false); setEditContent(post.content); }} className="bg-slate-700 px-4 py-1.5 rounded-lg text-[10px] font-bold text-slate-300 transition-all">Cancel</button>
+          <div className="flex gap-2 justify-end">
+            <button onClick={handleUpdate} className="bg-linkedin-blue hover:bg-opacity-90 px-4 py-1.5 rounded-full text-xs font-semibold text-white transition-opacity">Save</button>
+            <button onClick={() => { setIsEditing(false); setEditContent(post.content); }} className="bg-linkedin-background border border-linkedin-border text-linkedin-text-secondary px-4 py-1.5 rounded-full text-xs font-semibold transition-colors hover:bg-linkedin-border">Cancel</button>
           </div>
         </div>
       ) : (
         <>
-          <p className="text-slate-300 text-sm leading-relaxed mb-4 whitespace-pre-wrap">{post.content}</p>
+          <p className="text-linkedin-text-primary text-sm leading-relaxed mb-3 whitespace-pre-wrap">{post.content}</p>
           {post.image && (
-            <div className="mb-4 overflow-hidden rounded-xl border border-slate-800">
+            <div className="mb-3 overflow-hidden rounded-md border border-linkedin-border">
               <img src={post.image} alt="Post Content" className="w-full h-auto object-cover max-h-[400px]" />
             </div>
           )}
         </>
       )}
 
-      {/* Publicly visible stats */}
-      <div className="flex gap-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-3 px-1">
+      <div className="flex justify-between items-center text-xs text-linkedin-text-secondary mb-3 pb-2 border-b border-linkedin-border">
         <span>{post.likes?.length || 0} Likes</span>
         <span>{post.comments?.length || 0} Comments</span>
       </div>
 
-      <div className="flex gap-6 border-t border-slate-800/50 pt-4">
+      <div className="flex justify-around border-t border-linkedin-border pt-3">
         <button 
           onClick={handleLike} 
-          className={`text-xs font-bold transition-colors flex items-center gap-2 ${hasLiked ? 'text-indigo-400' : 'text-slate-500 hover:text-indigo-400'}`}
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition-colors text-sm font-medium ${hasLiked ? 'text-linkedin-blue' : 'text-linkedin-text-secondary hover:bg-linkedin-background'}`}
         >
-          <span>{hasLiked ? '❤️' : '👍'}</span> {hasLiked ? 'Liked' : 'Like'}
+          {hasLiked ? <AiFillLike className="text-lg" /> : <AiOutlineLike className="text-lg" />} {hasLiked ? 'Liked' : 'Like'}
         </button>
         <button 
           onClick={() => setShowCommentInput(!showCommentInput)}
-          className="text-xs font-bold text-slate-500 hover:text-indigo-400 transition-colors flex items-center gap-2"
+          className="flex items-center gap-2 px-3 py-1.5 rounded-md transition-colors text-sm font-medium text-linkedin-text-secondary hover:bg-linkedin-background"
         >
-          <span>💬</span> Comment
+          <FaRegCommentDots className="text-lg" /> Comment
         </button>
         <button 
           onClick={handleShare}
-          className={`text-xs font-bold transition-colors flex items-center gap-2 ${shareStatus === "Copied!" ? "text-green-400" : "text-slate-500 hover:text-indigo-400"}`}
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition-colors text-sm font-medium ${shareStatus === "Copied!" ? "text-green-600" : "text-linkedin-text-secondary hover:bg-linkedin-background"}`}
         >
-          <span>🚀</span> {shareStatus}
+          <RiShareForwardLine className="text-lg" /> {shareStatus}
         </button>
       </div>
 
@@ -166,30 +167,26 @@ const isOwner = loggedInUserId && postOwnerId &&
         <form onSubmit={handleCommentSubmit} className="mt-4 flex gap-2">
           <input 
             type="text"
-            placeholder="Write a comment..."
-            className="flex-grow bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-1.5 text-xs text-white outline-none focus:ring-1 focus:ring-indigo-500"
+            placeholder="Add a comment..."
+            className="flex-grow bg-linkedin-background border border-linkedin-border rounded-full px-4 py-2 text-sm text-linkedin-text-primary outline-none focus:ring-1 focus:ring-linkedin-blue"
             value={commentText}
             onChange={(e) => setCommentText(e.target.value)}
           />
-          <button type="submit" className="bg-indigo-600 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold hover:bg-indigo-500">Post</button>
+          <button type="submit" className="bg-linkedin-blue text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-opacity-90">Post</button>
         </form>
       )}
 
       {/* Owner-only comment content visibility logic */}
       <div className="mt-4 space-y-2">
-        {isOwner ? (
-          post.comments?.map((comment) => (
-            <div key={comment._id} className="bg-slate-800/30 p-2.5 rounded-xl border border-slate-800/50">
-              <p className="text-[10px] font-black text-indigo-400 uppercase tracking-tighter">{comment.user?.name || "User"}</p>
-              <p className="text-xs text-slate-300">{comment.text}</p>
-            </div>
-          ))
-        ) : (
-          post.comments?.length > 0 && (
-            <p className="text-[10px] italic text-slate-600 px-1">
-              {post.comments.length} engineering feedbacks received. Private to author.
-            </p>
-          )
+        {post.comments?.length > 0 && (
+          <div className="border-t border-linkedin-border pt-3">
+            {post.comments.map((comment) => (
+              <div key={comment._id} className="bg-linkedin-background p-3 rounded-lg mb-2">
+                <p className="font-semibold text-sm text-linkedin-text-primary">{comment.user?.name || "User"}</p>
+                <p className="text-xs text-linkedin-text-secondary">{comment.text}</p>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </div>

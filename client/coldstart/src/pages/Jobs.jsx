@@ -100,127 +100,126 @@ const Jobs = () => {
   useEffect(() => { fetchJobs(); }, []);
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 p-6 flex flex-col items-center">
-      <div className="w-full max-w-[1400px]">
-        <Navbar />
-        
+    <div className="min-h-screen bg-linkedin-background font-system-ui">
+      <Navbar />
+      <div className="container mx-auto p-4 lg:p-8">
         {/* Hidden File Input */}
-<input 
-  type="file" 
-  ref={fileInputRef} 
-  className="hidden" 
-  accept=".pdf,.doc,.docx"
-  onChange={(e) => handleApply(e)} // Pass the event explicitly if needed
-/>
+        <input 
+          type="file" 
+          ref={fileInputRef} 
+          className="hidden" 
+          accept=".pdf,.doc,.docx"
+          onChange={(e) => handleApply(e)} // Pass the event explicitly if needed
+        />
 
-        <div className="flex justify-between items-center mb-6">
-          <div className="px-2 text-left">
-            <h1 className="text-2xl font-bold tracking-tight">Engineering Opportunities</h1>
-            <p className="text-slate-500 text-sm">ColdStart Career Hub</p>
+        <div className="flex justify-between items-center mb-6 bg-linkedin-card border border-linkedin-border rounded-lg shadow-sm p-4">
+          <div className="text-left">
+            <h1 className="text-xl font-bold text-linkedin-text-primary">Engineering Opportunities</h1>
+            <p className="text-linkedin-text-secondary text-sm">ColdStart Career Hub</p>
           </div>
           {user?.role === "company" && (
             <button 
               onClick={() => { setIsEditing(false); setIsPostModalOpen(true); }} 
-              className="bg-indigo-600 hover:bg-indigo-500 px-6 py-2 rounded-xl font-bold transition-all shadow-lg shadow-indigo-600/20"
+              className="bg-linkedin-blue hover:bg-opacity-90 text-white px-5 py-2 rounded-full font-semibold transition-opacity"
             >
-              + Post New
+              + Post New Job
             </button>
           )}
         </div>
 
-        <div className="grid grid-cols-12 gap-6 h-[78vh]">
-          {/* Left List */}
-          <div className="col-span-4 glass-card rounded-3xl overflow-y-auto custom-scrollbar border border-slate-800">
-            {loading ? (
-              <div className="p-10 text-center animate-pulse text-indigo-500 font-bold">Scanning opportunities...</div>
-            ) : jobs.length > 0 ? (
-                jobs.map((job) => (
-                  <div 
-                    key={job._id} 
-                    onClick={() => setSelectedJob(job)} 
-                    className={`p-5 border-b border-slate-800 text-left cursor-pointer transition-all hover:bg-slate-900/40 ${selectedJob?._id === job._id ? "bg-indigo-500/10 border-r-4 border-r-indigo-500" : ""}`}
-                  >
-                    <div className="flex justify-between items-start">
-                      <h3 className="text-indigo-400 font-bold text-sm">{job.title}</h3>
-                      <span className="text-[9px] bg-slate-800 px-2 py-0.5 rounded text-slate-400 font-bold uppercase">{job.category}</span>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+          {/* Left List of Jobs */}
+          <div className="md:col-span-4 lg:col-span-3 bg-linkedin-card border border-linkedin-border rounded-lg shadow-sm overflow-hidden h-[calc(100vh-200px)]">
+            <div className="h-full overflow-y-auto custom-scrollbar">
+              {loading ? (
+                <div className="p-4 text-center animate-pulse text-linkedin-blue font-bold">Scanning opportunities...</div>
+              ) : jobs.length > 0 ? (
+                  jobs.map((job) => (
+                    <div 
+                      key={job._id} 
+                      onClick={() => setSelectedJob(job)} 
+                      className={`p-4 border-b border-linkedin-border text-left cursor-pointer transition-all hover:bg-linkedin-background ${selectedJob?._id === job._id ? "bg-linkedin-background border-r-4 border-r-linkedin-blue" : ""}`}
+                    >
+                      <div className="flex justify-between items-start">
+                        <h3 className="text-linkedin-blue font-bold text-base">{job.title}</h3>
+                        <span className="text-[10px] bg-linkedin-background text-linkedin-text-secondary px-2 py-0.5 rounded-full font-semibold">{job.category}</span>
+                      </div>
+                      <p className="text-linkedin-text-primary text-sm mt-1 font-semibold">{job.company}</p>
+                      <div className="mt-2 flex items-center gap-1.5">
+                        <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                        <span className="text-xs text-green-600 font-semibold">Actively recruiting</span>
+                      </div>
                     </div>
-                    <p className="text-white text-xs mt-1 font-semibold">{job.company}</p>
-                    <div className="mt-2 flex items-center gap-1.5">
-                       <span className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span>
-                       <span className="text-[10px] text-green-400 font-bold tracking-tighter uppercase">Reviewing</span>
-                    </div>
-                  </div>
-                ))
-            ) : (
-                <div className="p-10 text-center text-slate-500 italic">No openings found.</div>
-            )}
+                  ))
+              ) : (
+                  <div className="p-4 text-center text-linkedin-text-secondary italic">No job openings found.</div>
+              )}
+            </div>
           </div>
 
-          {/* Detailed View */}
-          <div className="col-span-8 glass-card rounded-3xl p-10 overflow-y-auto custom-scrollbar border border-slate-800">
+          {/* Detailed Job View */}
+          <div className="md:col-span-8 lg:col-span-9 bg-linkedin-card border border-linkedin-border rounded-lg shadow-sm p-6 overflow-y-auto custom-scrollbar h-[calc(100vh-200px)]">
             {selectedJob ? (
               <div className="animate-in fade-in duration-500 text-left">
                 <div className="flex justify-between items-start mb-6">
                   <div>
-                    <h1 className="text-4xl font-black text-white leading-tight">{selectedJob.title}</h1>
-                    <p className="text-indigo-400 font-bold text-lg">{selectedJob.company} • {selectedJob.location}</p>
+                    <h1 className="text-3xl font-bold text-linkedin-text-primary leading-tight">{selectedJob.title}</h1>
+                    <p className="text-linkedin-text-secondary text-lg">{selectedJob.company} • {selectedJob.location}</p>
                   </div>
                   
                   {user?.role === 'company' && selectedJob.postedBy === user.id && (
                     <div className="flex gap-2">
                       <button 
                         onClick={handleEditClick}
-                        className="text-indigo-400 hover:bg-indigo-500/10 p-2 rounded-lg transition-all text-xs font-bold border border-indigo-500/20"
+                        className="text-linkedin-blue hover:bg-linkedin-background px-3 py-1.5 rounded-full transition-colors text-sm font-semibold border border-linkedin-border"
                       >
-                        📝 EDIT
+                        Edit
                       </button>
                       <button 
                         onClick={() => handleDelete(selectedJob._id)}
-                        className="text-red-500 hover:bg-red-500/10 p-2 rounded-lg transition-all text-xs font-bold border border-red-500/20"
+                        className="text-red-600 hover:bg-red-500/10 px-3 py-1.5 rounded-full transition-colors text-sm font-semibold border border-red-300"
                       >
-                        🗑️ DELETE
+                        Delete
                       </button>
                     </div>
                   )}
                 </div>
 
-                <div className="flex gap-4 mb-10">
-                  {/* Updated Apply Button */}
+                <div className="flex gap-4 mb-8">
                   <button 
                     onClick={triggerFileInput} 
                     disabled={user?.role === 'company'}
-                    className={`px-10 py-3 rounded-xl font-black shadow-lg transition-all ${
+                    className={`px-8 py-2.5 rounded-full font-semibold transition-all text-base ${
                         user?.role === 'company' 
-                        ? 'bg-slate-800 text-slate-600 cursor-not-allowed' 
-                        : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-indigo-600/30 active:scale-95'
+                        ? 'bg-linkedin-background text-linkedin-text-secondary cursor-not-allowed border border-linkedin-border' 
+                        : 'bg-linkedin-blue hover:bg-opacity-90 text-white'
                     }`}
                   >
-                    Apply Now 🚀
+                    Apply Now
                   </button>
-                  <button className="border border-slate-700 px-10 py-3 rounded-xl font-bold hover:bg-slate-800 transition-all text-slate-300">
+                  <button className="border border-linkedin-border text-linkedin-text-primary px-8 py-2.5 rounded-full font-semibold hover:bg-linkedin-background transition-colors">
                     Save
                   </button>
                 </div>
 
-                {/* Rest of Info Grid and Sections */}
-                <div className="grid grid-cols-2 gap-y-4 bg-slate-900/40 p-6 rounded-2xl border border-slate-800 mb-10 text-sm">
-                   <p><span className="text-slate-500 font-bold uppercase text-[10px] block mb-1">Category</span> <span className="text-indigo-300 font-bold">{selectedJob.category}</span></p>
-                   <p><span className="text-slate-500 font-bold uppercase text-[10px] block mb-1">Stipend / Salary</span> <span className="text-slate-200 font-bold">{selectedJob.stipend || 'Competitive'}</span></p>
-                   <p><span className="text-slate-500 font-bold uppercase text-[10px] block mb-1">Duration</span> <span className="text-slate-200 font-bold">{selectedJob.duration || 'Full-time'}</span></p>
-                   <p><span className="text-slate-500 font-bold uppercase text-[10px] block mb-1">Experience</span> <span className="text-slate-200 font-bold">{selectedJob.experience || 'Fresher'}</span></p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 bg-linkedin-background p-6 rounded-lg border border-linkedin-border mb-8 text-sm">
+                   <p><span className="text-linkedin-text-secondary font-semibold uppercase text-xs block mb-1">Category</span> <span className="text-linkedin-text-primary font-bold">{selectedJob.category}</span></p>
+                   <p><span className="text-linkedin-text-secondary font-semibold uppercase text-xs block mb-1">Stipend / Salary</span> <span className="text-linkedin-text-primary font-bold">{selectedJob.stipend || 'Competitive'}</span></p>
+                   <p><span className="text-linkedin-text-secondary font-semibold uppercase text-xs block mb-1">Duration</span> <span className="text-linkedin-text-primary font-bold">{selectedJob.duration || 'Full-time'}</span></p>
+                   <p><span className="text-linkedin-text-secondary font-semibold uppercase text-xs block mb-1">Experience</span> <span className="text-linkedin-text-primary font-bold">{selectedJob.experience || 'Fresher'}</span></p>
                 </div>
 
-                <div className="space-y-10">
+                <div className="space-y-6">
                   <section>
-                    <h3 className="text-sm font-black uppercase text-indigo-500 border-b border-slate-800 pb-2 mb-4 tracking-widest">Job Description</h3>
-                    <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-line">{selectedJob.description}</p>
+                    <h3 className="text-base font-bold text-linkedin-text-primary border-b border-linkedin-border pb-2 mb-4">Job Description</h3>
+                    <p className="text-linkedin-text-primary text-sm leading-relaxed whitespace-pre-line">{selectedJob.description}</p>
                   </section>
-                  {/* ... other sections remain the same ... */}
+                  {/* Additional sections like Responsibilities, Qualifications would go here */}
                 </div>
               </div>
             ) : (
-              <div className="h-full flex flex-col items-center justify-center text-slate-600 italic">
-                <div className="text-6xl mb-4 grayscale opacity-20 text-indigo-500">💼</div>
+              <div className="h-full flex flex-col items-center justify-center text-linkedin-text-secondary italic">
+                <div className="text-6xl mb-4 text-linkedin-blue opacity-30">💼</div>
                 Select an opening to view full details
               </div>
             )}

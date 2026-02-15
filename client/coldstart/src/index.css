@@ -1,26 +1,18 @@
 @import "tailwindcss"; /* This replaces base, components, and utilities in v4 */
 
 @theme {
-  /* Option 1: Modern & Trusted Palette */
-  --color-primary-bg: #F8F9FA;
-  --color-content-bg: #FFFFFF;
-  --color-text-primary: #1D2D35;
-  --color-text-secondary: #ADB5BD;
-  --color-accent: #0052EA;
-  --color-accent-hover: #0041BB;
-  --color-success: #28A745;
-  --color-error: #DC3545;
-  --color-border-subtle: #E9ECEF;
-
-  /* Dark Mode Palette */
-  --color-dark-bg: #0A1929;
-  --color-dark-card: #102338;
-  --color-dark-border: #1E293B;
+  --color-linkedin-background: #F3F2EF;
+  --color-linkedin-blue: #0A66C2;
+  --color-linkedin-card: #FFFFFF;
+  --color-linkedin-border: #E5E7EB;
+  --color-linkedin-text-primary: #000000;
+  --color-linkedin-text-secondary: #666666;
+  --color-slate-950: #020617;
 }
 
 @layer base {
   body {
-    @apply bg-slate-950 text-slate-200 antialiased;
+    @apply bg-linkedin-background text-linkedin-text-primary antialiased;
     margin: 0;
     font-family: 'Inter', system-ui, sans-serif;
   }
@@ -32,14 +24,9 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  @apply bg-slate-900;
+  @apply bg-linkedin-background;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-indigo-500 rounded-full hover:bg-indigo-400 transition-colors;
-}
-
-/* Glassmorphism utility */
-.glass-card {
-  @apply bg-slate-900/50 backdrop-blur-md border border-slate-800 shadow-xl;
+  @apply bg-linkedin-blue rounded-full hover:bg-linkedin-blue/80 transition-colors;
 }

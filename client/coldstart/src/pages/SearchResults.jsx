@@ -42,26 +42,26 @@ const SearchResults = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white p-6">
+    <div className="min-h-screen bg-linkedin-background text-linkedin-text-primary p-6">
       <Navbar />
       <div className="max-w-4xl mx-auto mt-10">
-        <h2 className="text-2xl font-bold mb-6 italic">Results for "{query}"</h2>
+        <h2 className="text-2xl font-bold mb-6 italic text-linkedin-text-primary">Results for "{query}"</h2>
         
         <div className="grid gap-4">
           {results.map(person => (
             // Prevent showing yourself in search results 
             person._id !== currentUser?._id && (
-              <div key={person._id} className="glass-card p-5 rounded-2xl flex items-center justify-between border border-slate-800 hover:border-indigo-500/50 transition-all">
+              <div key={person._id} className="glass-card p-5 rounded-2xl flex flex-col sm:flex-row items-center sm:justify-between border border-linkedin-border hover:border-linkedin-blue/50 transition-all">
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-gradient-to-br from-indigo-600 to-violet-600 rounded-full flex items-center justify-center font-bold text-xl shadow-lg">
+                  <div className="w-14 h-14 bg-linkedin-blue rounded-full flex items-center justify-center font-bold text-xl shadow-lg text-white">
                     {person.name.charAt(0)}
                   </div>
                   <div>
-                    <h4 className="font-bold text-lg">{person.name}</h4>
-                    <p className="text-xs text-indigo-400 font-medium">{person.headline}</p>
+                    <h4 className="font-bold text-lg text-linkedin-text-primary">{person.name}</h4>
+                    <p className="text-xs text-linkedin-blue font-medium">{person.headline}</p>
                     <div className="flex gap-2 mt-2">
                       {person.skills?.slice(0, 3).map((skill, index) => (
-                        <span key={index} className="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">
+                        <span key={index} className="text-[10px] bg-linkedin-background text-linkedin-text-secondary px-2 py-0.5 rounded border border-linkedin-border">
                           {skill}
                         </span>
                       ))}
@@ -72,7 +72,7 @@ const SearchResults = () => {
                 {/* The Connect Trigger  */}
                 <button 
                   onClick={() => handleConnect(person._id)}
-                  className="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-xl font-bold text-sm shadow-lg shadow-indigo-600/20 transition-all active:scale-95"
+                  className="w-full sm:w-auto mt-3 sm:mt-0 bg-linkedin-blue hover:bg-linkedin-blue/80 text-white px-5 py-2 rounded-xl font-bold text-sm shadow-lg shadow-linkedin-blue/20 transition-all active:scale-95"
                 >
                   Connect
                 </button>
@@ -80,10 +80,10 @@ const SearchResults = () => {
             )
           ))}
           
-          {loading && <p className="text-center text-indigo-400 animate-pulse">Searching the ColdStart network...</p>}
+          {loading && <p className="text-center text-linkedin-blue animate-pulse">Searching the ColdStart network...</p>}
           {!loading && results.length === 0 && (
             <div className="text-center p-10 glass-card rounded-3xl">
-              <p className="text-slate-500">No engineers found with that name or skill.</p>
+              <p className="text-linkedin-text-secondary">No engineers found with that name or skill.</p>
             </div>
           )}
         </div>

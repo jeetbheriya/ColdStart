@@ -3,14 +3,14 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/index.css", // Add this line
   ],
   theme: {
     extend: {
       colors: {
-        slate: {
-          950: '#020617',
-        }
-      }
+        'linkedin-blue': '#0A66C2',
+        'linkedin-light-gray': '#F3F2EF',
+      },
     },
   },
   plugins: [],
