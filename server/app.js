@@ -21,11 +21,34 @@ const PORT = process.env.PORT || 8080;
 
 connectDB();
 
+ const allowedOrigins = [
+    'http://localhost:3000', // For local development
+    'http://localhost:5173', // For local Vite development
+    'https://coldstart-frontend.netlify.app/', // Your Netlify URL
+    'https://coldstart-frontend-shna.onrender.com', // Your Render frontend URL
+    'https://coldstart-backend-o4zb.onrender.com' // Your Render backend URL (if making self-requests)
+];
+
 app.use(cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: function (origin, callback) {
+        // allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            var msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
+    credentials: true, // Allow cookies and authentication headers
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// app.use(cors({
+//     origin: "http://localhost:5173",
+//     credentials: true,
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+// }));
 
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
