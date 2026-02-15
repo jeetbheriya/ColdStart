@@ -24,7 +24,7 @@ connectDB();
  const allowedOrigins = [
     'http://localhost:3000', // For local development
     'http://localhost:5173', // For local Vite development
-    'https://coldstart-frontend.netlify.app/', // Your Netlify URL
+    'https://coldstart-frontend.netlify.app', // Your Netlify URL
     'https://coldstart-frontend-shna.onrender.com', // Your Render frontend URL
     'https://coldstart-backend-o4zb.onrender.com' // Your Render backend URL (if making self-requests)
 ];
@@ -69,7 +69,7 @@ app.use("/api/applications", applicationRoutes);
    SOCKET.IO SETUP
 ========================= */
 const io = new Server(server, {
-  cors: { origin: "http://localhost:5173", credentials: true },
+  cors: { origin: allowedOrigins, credentials: true },
   transports: ["websocket"],
 });
 
