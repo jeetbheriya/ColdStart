@@ -21,6 +21,8 @@ const Landing = () => {
   const { user, token } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+
   /* ===============================
      FETCH POSTS + NETWORK DATA
   =============================== */
@@ -42,8 +44,8 @@ const Landing = () => {
       };
 
       const [postsRes, networkRes] = await Promise.all([
-        axios.get("http://localhost:8080/api/posts", config),
-        axios.get("http://localhost:8080/api/connections/network", config),
+        axios.get(`${API_URL}/api/posts`, config),
+        axios.get(`${API_URL}/api/connections/network`, config),
       ]);
 
       setPosts(postsRes.data || []);
@@ -79,7 +81,7 @@ const Landing = () => {
   useEffect(() => {
     fetchData();
     fetchThought();
-  }, [token]);
+  }, [token, API_URL]);
 
   return (
     <div className="min-h-screen bg-linkedin-background font-system-ui">
