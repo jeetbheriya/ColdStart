@@ -8,6 +8,8 @@ const Signup = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,7 +21,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "http://localhost:8080/api/auth/register",
+        `${API_URL}/api/auth/register`,
         formData
       );
       dispatch(setCredentials(res.data));

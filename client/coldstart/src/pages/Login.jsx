@@ -11,10 +11,12 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const res = await axios.post("http://localhost:8080/api/auth/login", formData);
+        const res = await axios.post(`${API_URL}/api/auth/login`, formData);
         dispatch(setCredentials(res.data));
         alert("Logged in succesfully !");
         navigate("/");
