@@ -6,6 +6,8 @@ import { setCredentials } from '../redux/slices/authSlice';
 const EditProfileModal = ({ isOpen, onClose }) => {
   // 1. Pull current user and token from Redux
   const { user, token } = useSelector((state) => state.auth);
+
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
   
   const [formData, setFormData] = useState({
     headline: user?.headline || "",
@@ -31,7 +33,7 @@ const EditProfileModal = ({ isOpen, onClose }) => {
         skills: formData.skills.split(",").map(s => s.trim()).filter(s => s !== "") 
       };
 
-      const res = await axios.put("http://localhost:8080/api/users/profile", updatedData, config);
+      const res = await axios.put(`${API_URL}/api/users/profile`, updatedData, config);
       
       // 3. Update Redux (which also updates localStorage)
       dispatch(setCredentials(res.data)); 

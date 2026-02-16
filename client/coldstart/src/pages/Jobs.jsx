@@ -16,10 +16,12 @@ const Jobs = () => {
 
   const { user, token } = useSelector((state) => state.auth);
 
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+
   const fetchJobs = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:8080/api/jobs");
+      const res = await axios.get(`${API_URL}/api/jobs`);
       setJobs(res.data);
       if (res.data.length > 0) setSelectedJob(res.data[0]);
     } catch (err) {
@@ -55,7 +57,7 @@ const Jobs = () => {
 
     try {
       const res = await axios.post(
-        `http://localhost:8080/api/applications/apply/${selectedJob._id}`, 
+        `${API_URL}/api/applications/apply/${selectedJob._id}`, 
         formData, 
         { headers: { 
             Authorization: `Bearer ${token}`, 
@@ -74,7 +76,7 @@ const Jobs = () => {
   const handleDelete = async (jobId) => {
     if (window.confirm("Confirm deletion of this opening?")) {
       try {
-        await axios.delete(`http://localhost:8080/api/jobs/${jobId}`, {
+        await axios.delete(`${API_URL}/api/jobs/${jobId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         await fetchJobs(); 

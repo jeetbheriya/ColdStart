@@ -11,6 +11,8 @@ const Chat = () => {
 
   const currentUserId = user?.id || user?._id; // 🔥 NORMALIZED USER ID
 
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [connections, setConnections] = useState([]);
@@ -29,7 +31,7 @@ const Chat = () => {
     if (!currentUserId || !token) return;
 
     axios
-      .get("http://localhost:8080/api/connections/network", {
+      .get(`${API_URL}/api/connections/network`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => setConnections(res.data))
@@ -41,7 +43,7 @@ const Chat = () => {
     if (!selectedChat || !token) return;
 
     axios
-      .get(`http://localhost:8080/api/chat/${selectedChat._id}`, {
+      .get(`${API_URL}/api/chat/${selectedChat._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -108,7 +110,7 @@ const Chat = () => {
 
     try {
       await axios.post(
-        "http://localhost:8080/api/chat",
+        `${API_URL}/api/chat`,
         {
           receiverId: selectedChat._id,
           content: msgData.content,

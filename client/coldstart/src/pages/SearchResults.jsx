@@ -13,11 +13,13 @@ const SearchResults = () => {
   // Use Redux token for consistency with your Auth state
   const { token, user: currentUser } = useSelector((state) => state.auth);
 
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+
   useEffect(() => {
     const fetchResults = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`http://localhost:8080/api/users/search/${query}`, {
+        const res = await axios.get(`${API_URL}/api/users/search/${query}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setResults(res.data);
@@ -34,7 +36,7 @@ const SearchResults = () => {
   const handleConnect = async (receiverId) => {
     try {
       const config = { headers: { Authorization: `Bearer ${token}` } };
-      await axios.post(`http://localhost:8080/api/connections/request/${receiverId}`, {}, config);
+      await axios.post(`${API_URL}/api/connections/request/${receiverId}`, {}, config);
       alert("Professional connection request sent!");
     } catch (err) {
       alert(err.response?.data?.message || "Request already pending");

@@ -20,6 +20,8 @@ const PostJobModal = ({ isOpen, onClose, refreshJobs, isEditing, editData }) => 
     skillsRequired: "",
   });
 
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+
   // Pre-fill data if editing
   useEffect(() => {
     if (isEditing && editData) {
@@ -62,13 +64,13 @@ const PostJobModal = ({ isOpen, onClose, refreshJobs, isEditing, editData }) => 
 
       if (isEditing) {
         // PUT request for updates
-        await axios.put(`http://localhost:8080/api/jobs/${editData._id}`, jobData, {
+        await axios.put(`${API_URL}/api/jobs/${editData._id}`, jobData, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert("Listing updated successfully!");
       } else {
         // POST request for new listings
-        await axios.post("http://localhost:8080/api/jobs", jobData, {
+        await axios.post(`${API_URL}/api/jobs`, jobData, {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert("New job published successfully!");

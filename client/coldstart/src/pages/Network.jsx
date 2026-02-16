@@ -24,11 +24,13 @@ const Network = () => {
 
   const config = { headers: { Authorization: `Bearer ${token}` } };
 
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+
   const fetchNetworkData = async () => {
     try {
       const [pendingRes, networkRes] = await Promise.all([
-        axios.get("http://localhost:8080/api/connections/pending", config),
-        axios.get("http://localhost:8080/api/connections/network", config)
+        axios.get(`${API_URL}/api/connections/pending`, config),
+        axios.get(`${API_URL}/api/connections/network`, config)
       ]);
       setPendingRequests(pendingRes.data);
       setMyNetwork(networkRes.data);
@@ -37,7 +39,7 @@ const Network = () => {
 
   const fetchRecommended = async () => {
     try {
-      const recRes = await axios.get("http://localhost:8080/api/users/recommended", config);
+      const recRes = await axios.get(`${API_URL}/api/users/recommended`, config);
       // Filter out current user, shuffle, and take up to 5 unique recommendations
       const filteredRecommendations = recRes.data.filter(
         (item) => item._id !== currentUser._id && !myNetwork.some(connected => connected._id === item._id) // Filter out connected users
@@ -57,7 +59,7 @@ const Network = () => {
 
   const handleResponse = async (id, status) => {
     try {
-      await axios.put(`http://localhost:8080/api/connections/respond/${id}`, { status }, config);
+      await axios.put(`${API_URL}/api/connections/respond/${id}`, { status }, config);
       fetchNetworkData(); // Refresh both lists for real-time feedback
       fetchRecommended(); // Also refresh recommendations
     } catch (err) { alert("Action failed"); }
@@ -69,7 +71,7 @@ const Network = () => {
 
   const handleConnect = async (personId) => {
     try {
-      await axios.post(`http://localhost:8080/api/connections/request/${personId}`, {}, config);
+      await axios.post(`${API_URL}/api/connections/request/${personId}`, {}, config);
       alert("Connection request sent!");
       fetchRecommended(); // Refresh recommendations after sending a request
     } catch (err) {

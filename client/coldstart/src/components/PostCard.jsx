@@ -14,6 +14,8 @@ const PostCard = ({ post, refreshPosts }) => {
   const [showCommentInput, setShowCommentInput] = useState(false);
   const [shareStatus, setShareStatus] = useState("Share");
 
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+
   // Improved owner check to handle both string IDs and populated objects
   // NEW ROBUST COMPARISON
 const loggedInUserId = user?._id || user?.id;
@@ -45,7 +47,7 @@ const isOwner = loggedInUserId && postOwnerId &&
   const handleLike = async () => {
     try {
       const config = { headers: { Authorization: `Bearer ${token}` } };
-      await axios.put(`http://localhost:8080/api/posts/${post._id}/like`, {}, config);
+      await axios.put(`${API_URL}/api/posts/${post._id}/like`, {}, config);
       refreshPosts(); 
     } catch (err) {
       console.error("Like failed", err);
@@ -57,7 +59,7 @@ const isOwner = loggedInUserId && postOwnerId &&
     if (!commentText.trim()) return;
     try {
       const config = { headers: { Authorization: `Bearer ${token}` } };
-      await axios.post(`http://localhost:8080/api/posts/${post._id}/comment`, { text: commentText }, config);
+      await axios.post(`${API_URL}/api/posts/${post._id}/comment`, { text: commentText }, config);
       setCommentText("");
       setShowCommentInput(false);
       refreshPosts(); 
@@ -70,7 +72,7 @@ const isOwner = loggedInUserId && postOwnerId &&
     if (!window.confirm("Are you sure you want to delete this post?")) return;
     try {
       const config = { headers: { Authorization: `Bearer ${token}` } };
-      await axios.delete(`http://localhost:8080/api/posts/${post._id}`, config);
+      await axios.delete(`${API_URL}/api/posts/${post._id}`, config);
       refreshPosts();
     } catch (err) {
       alert("Failed to delete post");
@@ -81,7 +83,7 @@ const isOwner = loggedInUserId && postOwnerId &&
     if (!editContent.trim()) return;
     try {
       const config = { headers: { Authorization: `Bearer ${token}` } };
-      await axios.put(`http://localhost:8080/api/posts/${post._id}`, { content: editContent }, config);
+      await axios.put(`${API_URL}/api/posts/${post._id}`, { content: editContent }, config);
       setIsEditing(false);
       refreshPosts(); 
     } catch (err) {

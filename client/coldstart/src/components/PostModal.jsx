@@ -7,6 +7,8 @@ const PostModal = ({ isOpen, onClose, refreshPosts }) => {
   const [image, setImage] = useState(null); 
   const { token } = useSelector((state) => state.auth);
 
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+
   const handlePostSubmit = async (e) => {
     e.preventDefault();
     if (!content.trim() && !image) return;
@@ -23,7 +25,7 @@ const PostModal = ({ isOpen, onClose, refreshPosts }) => {
         } 
       };
 
-      await axios.post("http://localhost:8080/api/posts", formData, config);
+      await axios.post(`${API_URL}/api/posts`, formData, config);
       
       // Reset state so modal is clean next time
       setContent("");

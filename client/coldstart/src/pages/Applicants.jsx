@@ -11,11 +11,13 @@ const Applicants = () => {
   const [showContact, setShowContact] = useState(false);
   const { token } = useSelector((state) => state.auth);
 
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+
   useEffect(() => {
     const fetchApps = async () => {
       try {
         setLoading(true);
-        const res = await axios.get("http://localhost:8080/api/applications/company", {
+        const res = await axios.get(`${API_URL}/api/applications/company`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setApps(res.data);
@@ -125,7 +127,7 @@ const Applicants = () => {
                     <div className="flex justify-between items-end mb-4">
                       <h3 className="text-sm font-bold text-linkedin-text-primary border-b border-linkedin-border pb-2">Resume Preview</h3>
                       <a 
-                        href={`http://localhost:8080/${selectedApp.resume.replace(/\\/g, "/")}`} 
+                        href={`${API_URL}/${selectedApp.resume.replace(/\\/g, "/")}`} 
                         target="_blank" 
                         rel="noreferrer" 
                         className="text-linkedin-blue text-sm hover:underline"
@@ -136,7 +138,7 @@ const Applicants = () => {
                     <div className="w-full h-[650px] bg-linkedin-background rounded-lg overflow-hidden border border-linkedin-border shadow-md">
                       {/* Fixed path format for cross-platform compatibility */}
                       <iframe 
-                        src={`http://localhost:8080/${selectedApp.resume.replace(/\\/g, "/")}#toolbar=0&navpanes=0`} 
+                        src={`${API_URL}/${selectedApp.resume.replace(/\\/g, "/")}#toolbar=0&navpanes=0`} 
                         className="w-full h-full border-none"
                         title="Candidate Resume"
                       />
