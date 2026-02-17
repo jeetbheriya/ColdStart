@@ -2,7 +2,7 @@
 
 ColdStart is a full-stack application designed to connect professionals, enable project collaboration, and facilitate job searching. This README provides a comprehensive guide to understanding, installing, and using ColdStart.
 
-##Live Link : `https://coldstart-frontend-shna.onrender.com`
+## Live Link : `https://coldstart-frontend-shna.onrender.com`
 
 ## API Endpoints
 
