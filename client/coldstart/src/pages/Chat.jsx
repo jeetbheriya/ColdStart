@@ -11,7 +11,7 @@ const Chat = () => {
 
   const currentUserId = user?.id || user?._id; // 🔥 NORMALIZED USER ID
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+  const API_URL = import.meta.env.VITE_API_URL ;
 
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
