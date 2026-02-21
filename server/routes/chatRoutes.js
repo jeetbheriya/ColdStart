@@ -1,6 +1,10 @@
-const router = require('express').Router();
-const { sendMessage, getMessages, markAsRead } = require('../controllers/chatController');
-const { protect } = require('../middleware/authMiddleware');
+const router = require("express").Router();
+const {
+  sendMessage,
+  getMessages,
+  markAsRead,
+} = require("../controllers/chatController");
+const { protect } = require("../middleware/authMiddleware");
 
 // POST /api/chat - Save message [Phase 4 Persistence]
 router.post("/", protect, sendMessage);

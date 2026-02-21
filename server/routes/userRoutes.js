@@ -1,11 +1,16 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { getUserProfile, updateUserProfile, searchUsers } = require('../controllers/userController');
-const { protect } = require('../middleware/authMiddleware');
+const {
+  getUserProfile,
+  updateUserProfile,
+  searchUsers,
+} = require("../controllers/userController");
+const { protect } = require("../middleware/authMiddleware");
 
-router.route('/profile')
+router
+  .route("/profile")
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
 
-router.get('/search/:query', protect, searchUsers);
+router.get("/search/:query", protect, searchUsers);
 module.exports = router;

@@ -16,11 +16,11 @@ exports.register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // UPDATED: Include role when creating the user in MongoDB
-    const user = await User.create({ 
-      name, 
-      email, 
-      password: hashedPassword, 
-      role: role || "user" 
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      role: role || "user",
     });
 
     // Generate JWT
@@ -39,7 +39,9 @@ exports.register = async (req, res) => {
       },
     });
   } catch (error) {
-    return res.status(500).json({ message: "Server Error", error: error.message });
+    return res
+      .status(500)
+      .json({ message: "Server Error", error: error.message });
   }
 };
 
@@ -48,20 +50,22 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if(!user){
-      return res.status(400).json({ message: "User not found !"});
+    if (!user) {
+      return res.status(400).json({ message: "User not found !" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if(!isMatch){
+    if (!isMatch) {
       return res.status(400).json({ message: "Invalid Credentials" });
     }
 
-    const token = jwt.sign({ id: user._id}, process.env.JWT_SECRET, { expiresIn: "1D"});
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1D",
+    });
 
     return res.status(200).json({
       message: "logged in successfully",
-      token, 
+      token,
       user: {
         id: user._id,
         name: user.name,
@@ -70,6 +74,8 @@ exports.login = async (req, res) => {
       },
     });
   } catch (error) {
-    return res.status(500).json({ message: "Server Error", error: error.message});
+    return res
+      .status(500)
+      .json({ message: "Server Error", error: error.message });
   }
 };

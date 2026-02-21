@@ -1,4 +1,4 @@
-const Post = require('../models/Post');
+const Post = require("../models/Post");
 
 // @desc    Create a new post
 const createPost = async (req, res) => {
@@ -9,14 +9,19 @@ const createPost = async (req, res) => {
     const newPost = new Post({
       user: req.user._id,
       content,
-      image 
+      image,
     });
 
     const savedPost = await newPost.save();
-    const populatedPost = await savedPost.populate('user', 'name headline profilePicture');
+    const populatedPost = await savedPost.populate(
+      "user",
+      "name headline profilePicture",
+    );
     res.status(201).json(populatedPost);
   } catch (error) {
-    res.status(500).json({ message: "Failed to create post", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to create post", error: error.message });
   }
 };
 
@@ -24,11 +29,13 @@ const createPost = async (req, res) => {
 const getPosts = async (req, res) => {
   try {
     const posts = await Post.find()
-      .populate('user', 'name profilePicture headline')
+      .populate("user", "name profilePicture headline")
       .sort({ createdAt: -1 });
     res.json(posts);
   } catch (error) {
-    res.status(500).json({ message: "Failed to fetch posts", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to fetch posts", error: error.message });
   }
 };
 
@@ -45,7 +52,9 @@ const deletePost = async (req, res) => {
     await post.deleteOne();
     res.json({ message: "Post removed" });
   } catch (error) {
-    res.status(500).json({ message: "Failed to delete post", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to delete post", error: error.message });
   }
 };
 
@@ -65,10 +74,15 @@ const updatePost = async (req, res) => {
     }
 
     const updatedPost = await post.save();
-    const populatedPost = await updatedPost.populate('user', 'name headline profilePicture');
+    const populatedPost = await updatedPost.populate(
+      "user",
+      "name headline profilePicture",
+    );
     res.json(populatedPost);
   } catch (error) {
-    res.status(500).json({ message: "Failed to update post", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to update post", error: error.message });
   }
 };
 
@@ -79,10 +93,10 @@ const toggleLike = async (req, res) => {
     if (!post) return res.status(404).json({ message: "Post not found" });
 
     const userId = req.user._id.toString();
-    const alreadyLiked = post.likes.some(id => id.toString() === userId);
+    const alreadyLiked = post.likes.some((id) => id.toString() === userId);
 
     if (alreadyLiked) {
-      post.likes = post.likes.filter(id => id.toString() !== userId);
+      post.likes = post.likes.filter((id) => id.toString() !== userId);
     } else {
       post.likes.push(req.user._id);
       // Removed: emitNotification logic
@@ -90,7 +104,9 @@ const toggleLike = async (req, res) => {
     await post.save();
     res.json(post.likes);
   } catch (error) {
-    res.status(500).json({ message: "Failed to toggle like", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to toggle like", error: error.message });
   }
 };
 
@@ -106,14 +122,26 @@ const addComment = async (req, res) => {
     };
     post.comments.push(newComment);
     await post.save();
-    
+
     // Removed: emitNotification logic
 
-    const updatedPost = await post.populate('comments.user', 'name profilePicture');
+    const updatedPost = await post.populate(
+      "comments.user",
+      "name profilePicture",
+    );
     res.json(updatedPost.comments);
   } catch (error) {
-    res.status(500).json({ message: "Failed to add comment", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to add comment", error: error.message });
   }
 };
 
-module.exports = { createPost, getPosts, deletePost, updatePost, toggleLike, addComment };
+module.exports = {
+  createPost,
+  getPosts,
+  deletePost,
+  updatePost,
+  toggleLike,
+  addComment,
+};

@@ -63,7 +63,6 @@ app.use("/api/connections", connectionRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/applications", applicationRoutes);
-// Line 45 should now be empty or contain a valid route above
 
 /* =========================
    SOCKET.IO SETUP

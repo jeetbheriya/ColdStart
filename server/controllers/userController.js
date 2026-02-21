@@ -1,8 +1,8 @@
-const User = require('../models/User');
+const User = require("../models/User");
 
 const getUserProfile = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    const user = await User.findById(req.user.id).select("-password");
     if (user) {
       res.json(user);
     } else {
@@ -51,14 +51,14 @@ const searchUsers = async (req, res) => {
       $or: [
         { name: { $regex: query, $options: "i" } },
         { headline: { $regex: query, $options: "i" } },
-        { skills: { $in: [new RegExp(query, "i")] } }
-      ]
+        { skills: { $in: [new RegExp(query, "i")] } },
+      ],
     }).select("-password"); // Exclude sensitive data
-    
+
     res.json(users);
   } catch (error) {
     res.status(500).json({ message: "Search failed" });
   }
 };
 
-module.exports = { getUserProfile, updateUserProfile,searchUsers };
+module.exports = { getUserProfile, updateUserProfile, searchUsers };
